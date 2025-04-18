@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ghibli AI Converter</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .upload-container {
+      margin-top: 20px;
+    }
+    .upload-btn {
+      background-color: #ff6347;
+      border: none;
+      padding: 12px 24px;
+      color: white;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .upload-btn:hover {
+      background-color: #ff4500;
+    }
+    #loading {
+      display: none;
+      color: #00ff00;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌸 Welcome to Ghibli AI Converter 🌸</h1>
+  <p>Upload your image and convert it to Ghibli style!</p>
+  
+  <div class="upload-container">
+    <input type="file" id="file-input" accept="image/*" />
+    <button class="upload-btn" id="upload-btn">Upload and Convert</button>
+  </div>
+
+  <!-- Loading Animation -->
+  <div id="loading">
+    <p>Converting... Please wait!</p>
+  </div>
+
+  <!-- Music Player -->
+  <audio id="background-music" loop>
+    <source src="your-music-file.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const uploadBtn = document.getElementById('upload-btn');
+    const fileInput = document.getElementById('file-input');
+    const loading = document.getElementById('loading');
+    const music = document.getElementById('background-music');
+
+    uploadBtn.addEventListener('click', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        // Show loading and start music
+        loading.style.display = 'block';
+        music.play();
+
+        // Send image to Flask server for processing
+        const formData = new FormData();
+        formData.append('image', file);
+
+        fetch('/convert', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          loading.style.display = 'none'; // Hide loading
+          alert('Image Converted to Ghibli Style!');
+        })
+        .catch(err => {
+          console.error('Error:', err);
+          loading.style.display = 'none';
+          alert('An error occurred.');
+        });
+      } else {
+        alert('Please select an image!');
+      }
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ghibli AI Converter</title>
+</head>
+<body>
+  <h2>Upload Image to Convert into Ghibli Style</h2>
+  <form action="/ghibli" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*" required><br><br>
+    <button type="submit">Convert to Ghibli</button>
+  </form>
+</body>
+</html>
