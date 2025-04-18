@@ -1,6 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+  /* Updated Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    .nav-buttons {
+      right: 15px;
+      top: 15px;
+      gap: 8px;
+      z-index: 100;
+    }
+
+    .cybr-btn {
+      min-width: 120px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 14px;
+      padding: 0 12px;
+    }
+
+    .about-box, .ghibli-box {
+      margin: 100px 15px 30px;
+      padding: 25px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .content {
+      padding: 30px 20px;
+      margin: 0 15px;
+    }
+
+    .scroll-hint {
+      bottom: 20px;
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Added Universal Section Styling */
+  #about-section, #ghibli-section {
+    display: none;
+    padding-top: 80px; /* Ensures space below navigation */
+    min-height: 100vh;
+  }
+
+  /* Enhanced Z-index Management */
+  .nav-buttons {
+    z-index: 100;
+  }
+
+  .about-box, .ghibli-box, .content {
+    position: relative;
+    z-index: 2;
+  }
+</style>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vinod Ingale | VFX Portfolio</title>
@@ -765,6 +827,31 @@
       }, 5000);
     });
   </script>
+<script>
+  // Updated scrollToSection function
+  function scrollToSection(sectionId) {
+    // Hide all sections
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('about-section').style.display = 'none';
+    document.getElementById('ghibli-section').style.display = 'none';
+
+    // Show selected section with proper spacing
+    const sections = {
+      'home': document.getElementById('home'),
+      'about': document.getElementById('about-section'),
+      'ghibli': document.getElementById('ghibli-section')
+    };
+
+    if (sections[sectionId]) {
+      sections[sectionId].style.display = 'block';
+      if (sectionId !== 'home') {
+        sections[sectionId].style.paddingTop = '80px'; // Additional top padding
+      }
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 
 </body>
 </html>
